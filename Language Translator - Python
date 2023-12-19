@@ -1,1 +1,114 @@
+from tkinter import *
+from tkinter import ttk,messagebox
+import googletrans
+from googletrans import Translator
+
+
+root=Tk()
+root.geometry('1070x700')
+root.title("Language Translator")
+
+root.configure(background="sky blue")
+
+
+
+def label_change():
+    c=combo1.get()
+    c1=combo2.get()
+    label1.configure(text=c)
+    label2.configure(text=c1)
+    c2=combo3.get()
+    label3.configure(text=c2)
+    root.after(1000,label_change)
+
+    
+def translate_now():
+    text_=text1.get(1.0,END)
+    t1=Translator()
+    trans_text=t1.translate(text_,src=combo1.get(),dest=combo2.get())
+    trans_text=trans_text.text
+    text2.delete(1.0,END)
+    text2.insert(END,trans_text)
+
+    text_=text1.get(1.0,END)
+    t2=Translator()
+    trans_text=t2.translate(text_,src=combo1.get(),dest=combo3.get())
+    trans_text=trans_text.text
+    text3.delete(1.0,END)
+    text3.insert(END,trans_text)
+
+        
+language=googletrans.LANGUAGES
+languageV=list(language.values())
+lang1=language.keys()
+#1st
+combo1=ttk.Combobox(root,values=languageV,font="garamond 14",state="r")
+combo1.place(x=100,y=180)
+combo1.set("ENGLISH")
+
+label1=Label(root,text="ENGLISH",font="georgia 20",bg="white",width=18,bd=2,relief=GROOVE)
+label1.place(x=60,y=210)
+
+#2nd
+combo2=ttk.Combobox(root,values=languageV,font="garamond 14",state="r")
+combo2.place(x=730,y=20)
+combo2.set("SELECT LANGUAGE")
+
+label2=Label(root,text="ENGLISH",font="georgia 20",bg="white",width=18,bd=2,relief=GROOVE)
+label2.place(x=680,y=50)
+
+#3rd
+combo3=ttk.Combobox(root,values=languageV,font="garamond 14",state="r")
+combo3.place(x=730,y=340)
+combo3.set("SELECT LANGUAGE")
+
+label3=Label(root,text="ENGLISH",font="georgia 20",bg="white",width=18,bd=2,relief=GROOVE)
+label3.place(x=680,y=370)
+
+#1 frame
+
+f=Frame(root,bg="black",bd=5)
+f.place(x=10,y=255,width=440,height=210)
+
+text1=Text(f,font="Taberna 20",bg="white",relief=GROOVE,wrap=WORD)
+text1.place(x=0,y=0,width=430,height=200)
+scrollbar1=Scrollbar(f)
+scrollbar1.pack(side="right",fill='y')
+scrollbar1.configure(command=text1.yview)
+text1.configure(yscrollcommand=scrollbar1.set)
+
+#2 frame trans
+f1=Frame(root,bg="black",bd=5)
+f1.place(x=620,y=98,width=440,height=210)
+
+text2=Text(f1,font="Taberna 20",bg="white",relief=GROOVE,wrap=WORD)
+text2.place(x=0,y=0,width=430,height=200)
+scrollbar2=Scrollbar(f1)
+scrollbar2.pack(side="right",fill='y')
+
+scrollbar2.configure(command=text2.yview)
+text2.configure(yscrollcommand=scrollbar2.set)
+
+
+#3frame trans
+
+f2=Frame(root,bg="black",bd=5)
+f2.place(x=620,y=420,width=440,height=210)
+
+text3=Text(f2,font="Taberna 20",bg="white",relief=GROOVE,wrap=WORD)
+text3.place(x=0,y=0,width=430,height=200)
+scrollbar3=Scrollbar(f2)
+scrollbar3.pack(side="right",fill='y')
+
+scrollbar3.configure(command=text3.yview)
+text3.configure(yscrollcommand=scrollbar3.set)
+
+
+translate=Button(root,text="Translate",font=("Taberna",15),activebackground="white",cursor="hand2",bd=1,width=10,height=1,bg="white",fg="Black",command=translate_now)
+translate.place(x=465,y=360)
+
+
+
+label_change()
+root.mainloop()
 
